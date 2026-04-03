@@ -1,0 +1,164 @@
+name: Autograding Tests
+
+on:
+  - push
+  - repository_dispatch
+
+permissions:
+  checks: write
+  actions: read
+  contents: read
+
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Case 01 - contoh resmi
+        id: case-01
+        uses: classroom-resources/autograding-io-grader@v1
+        with:
+          test-name: Case 01 - contoh resmi
+          setup-command: gcc -std=c11 -O2 -Wall -Wextra -o soal1 soal1.c
+          command: ./soal1
+          input: "5 7 2 9 9 4"
+          expected-output: "SUM 31 AVG 6.20 MAX 9 IDX 2"
+          comparison-method: exact
+          timeout: 2
+          max-score: 10
+
+      - name: Case 02 - satu elemen
+        id: case-02
+        uses: classroom-resources/autograding-io-grader@v1
+        with:
+          test-name: Case 02 - satu elemen
+          setup-command: gcc -std=c11 -O2 -Wall -Wextra -o soal1 soal1.c
+          command: ./soal1
+          input: "1 5"
+          expected-output: "SUM 5 AVG 5.00 MAX 5 IDX 0"
+          comparison-method: exact
+          timeout: 2
+          max-score: 10
+
+      - name: Case 03 - semua negatif
+        id: case-03
+        uses: classroom-resources/autograding-io-grader@v1
+        with:
+          test-name: Case 03 - semua negatif
+          setup-command: gcc -std=c11 -O2 -Wall -Wextra -o soal1 soal1.c
+          command: ./soal1
+          input: "4 -1 -2 -3 -4"
+          expected-output: "SUM -10 AVG -2.50 MAX -1 IDX 0"
+          comparison-method: exact
+          timeout: 2
+          max-score: 10
+
+      - name: Case 04 - semua nol
+        id: case-04
+        uses: classroom-resources/autograding-io-grader@v1
+        with:
+          test-name: Case 04 - semua nol
+          setup-command: gcc -std=c11 -O2 -Wall -Wextra -o soal1 soal1.c
+          command: ./soal1
+          input: "5 0 0 0 0 0"
+          expected-output: "SUM 0 AVG 0.00 MAX 0 IDX 0"
+          comparison-method: exact
+          timeout: 2
+          max-score: 10
+
+      - name: Case 05 - rata rata pecahan
+        id: case-05
+        uses: classroom-resources/autograding-io-grader@v1
+        with:
+          test-name: Case 05 - rata rata pecahan
+          setup-command: gcc -std=c11 -O2 -Wall -Wextra -o soal1 soal1.c
+          command: ./soal1
+          input: "6 1 2 3 4 5 6"
+          expected-output: "SUM 21 AVG 3.50 MAX 6 IDX 5"
+          comparison-method: exact
+          timeout: 2
+          max-score: 10
+
+      - name: Case 06 - maksimum berulang
+        id: case-06
+        uses: classroom-resources/autograding-io-grader@v1
+        with:
+          test-name: Case 06 - maksimum berulang
+          setup-command: gcc -std=c11 -O2 -Wall -Wextra -o soal1 soal1.c
+          command: ./soal1
+          input: "6 6 5 6 4 6 3"
+          expected-output: "SUM 30 AVG 5.00 MAX 6 IDX 0"
+          comparison-method: exact
+          timeout: 2
+          max-score: 10
+
+      - name: Case 07 - maksimum di awal
+        id: case-07
+        uses: classroom-resources/autograding-io-grader@v1
+        with:
+          test-name: Case 07 - maksimum di awal
+          setup-command: gcc -std=c11 -O2 -Wall -Wextra -o soal1 soal1.c
+          command: ./soal1
+          input: "3 100 50 75"
+          expected-output: "SUM 225 AVG 75.00 MAX 100 IDX 0"
+          comparison-method: exact
+          timeout: 2
+          max-score: 10
+
+      - name: Case 08 - rata rata pembulatan
+        id: case-08
+        uses: classroom-resources/autograding-io-grader@v1
+        with:
+          test-name: Case 08 - rata rata pembulatan
+          setup-command: gcc -std=c11 -O2 -Wall -Wextra -o soal1 soal1.c
+          command: ./soal1
+          input: "7 8 -2 8 -2 8 -2 8"
+          expected-output: "SUM 26 AVG 3.71 MAX 8 IDX 0"
+          comparison-method: exact
+          timeout: 2
+          max-score: 10
+
+      - name: Case 09 - campuran kecil
+        id: case-09
+        uses: classroom-resources/autograding-io-grader@v1
+        with:
+          test-name: Case 09 - campuran kecil
+          setup-command: gcc -std=c11 -O2 -Wall -Wextra -o soal1 soal1.c
+          command: ./soal1
+          input: "5 2 2 2 3 3"
+          expected-output: "SUM 12 AVG 2.40 MAX 3 IDX 3"
+          comparison-method: exact
+          timeout: 2
+          max-score: 10
+
+      - name: Case 10 - maksimum di akhir
+        id: case-10
+        uses: classroom-resources/autograding-io-grader@v1
+        with:
+          test-name: Case 10 - maksimum di akhir
+          setup-command: gcc -std=c11 -O2 -Wall -Wextra -o soal1 soal1.c
+          command: ./soal1
+          input: "4 1 2 3 10"
+          expected-output: "SUM 16 AVG 4.00 MAX 10 IDX 3"
+          comparison-method: exact
+          timeout: 2
+          max-score: 10
+
+      - name: Autograding Reporter
+        uses: classroom-resources/autograding-grading-reporter@v1
+        env:
+          CASE-01_RESULTS: "${{steps.case-01.outputs.result}}"
+          CASE-02_RESULTS: "${{steps.case-02.outputs.result}}"
+          CASE-03_RESULTS: "${{steps.case-03.outputs.result}}"
+          CASE-04_RESULTS: "${{steps.case-04.outputs.result}}"
+          CASE-05_RESULTS: "${{steps.case-05.outputs.result}}"
+          CASE-06_RESULTS: "${{steps.case-06.outputs.result}}"
+          CASE-07_RESULTS: "${{steps.case-07.outputs.result}}"
+          CASE-08_RESULTS: "${{steps.case-08.outputs.result}}"
+          CASE-09_RESULTS: "${{steps.case-09.outputs.result}}"
+          CASE-10_RESULTS: "${{steps.case-10.outputs.result}}"
+        with:
+          runners: case-01,case-02,case-03,case-04,case-05,case-06,case-07,case-08,case-09,case-10
