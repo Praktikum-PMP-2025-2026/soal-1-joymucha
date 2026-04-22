@@ -30,7 +30,7 @@ int max(int N, int arr[]){
 
 int idx(int N, int arr[]){
     int max = 0;
-    int idx;
+    int idx = 0;
     for (int j = 0; j<N; j++){
         if(max < arr[j]){
             max = arr[j];
