@@ -19,7 +19,7 @@ float avg(int N, int arr[]){
 }
 
 int max(int N, int arr[]){
-    int max = 0;
+    int max = -10;
     for (int j = 0; j<N; j++){
         if(max < arr[j]){
             max = arr[j];
@@ -29,7 +29,7 @@ int max(int N, int arr[]){
 }
 
 int idx(int N, int arr[]){
-    int max = 0;
+    int max = -10;
     int idx = 0;
     for (int j = 0; j<N; j++){
         if(max < arr[j]){
