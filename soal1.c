@@ -52,6 +52,9 @@ int main(){
 
     int hasil1 = sum(N, a);
     printf("\nSUM %d\n", hasil1);
+    if(hasil1 = 0){
+        printf("AVG 0\nMAX 0\n IDX 0");
+    }
 
     float hasil2 = avg(N, a);
     printf("AVG %.2f\n", hasil2);
